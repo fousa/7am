@@ -31,7 +31,7 @@
 	MCBlendType *blendType;
 }
 
-@property (retain) MCBlendType *blendType;
+@property (nonatomic, retain) MCBlendType *blendType;
 
 - (void)setBlendType:(MCBlendType *)myBlendType;
 

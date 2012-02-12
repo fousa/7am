@@ -118,7 +118,7 @@
 	
 	MCOverviewBlendViewCell *blendCell = (MCOverviewBlendViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (blendCell == nil) {
-		blendCell = [[[MCOverviewBlendViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:cellIdentifier] autorelease];
+		blendCell = [[[MCOverviewBlendViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
 	}
 	
 	MCBlend *blend = [((MCBlendType *) [blendTypes objectAtIndex:indexPath.section]).blends objectAtIndex:indexPath.row];

@@ -34,6 +34,6 @@
 	MCBlendController *blendController;
 }
 
-@property(retain) MCBlendController* blendController;
+@property(nonatomic, retain) MCBlendController* blendController;
 
 @end
