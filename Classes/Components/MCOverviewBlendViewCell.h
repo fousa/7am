@@ -31,7 +31,7 @@
 	MCBlend *blend;
 }
 
-@property (retain) MCBlend *blend;
+@property (nonatomic, retain) MCBlend *blend;
 
 - (void)setBlend:(MCBlend *)myBlend;
 

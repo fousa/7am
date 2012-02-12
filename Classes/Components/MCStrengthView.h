@@ -33,9 +33,9 @@
 	UIColor *lineColor;
 }
 
-@property (retain, readwrite) NSNumber *strength;
-@property (retain, readwrite) UIColor *circleColor;
-@property (retain, readwrite) UIColor *lineColor;
+@property (nonatomic, retain, readwrite) NSNumber *strength;
+@property (nonatomic, retain, readwrite) UIColor *circleColor;
+@property (nonatomic, retain, readwrite) UIColor *lineColor;
 
 - (void)setStrength:(NSNumber *)number;
 
