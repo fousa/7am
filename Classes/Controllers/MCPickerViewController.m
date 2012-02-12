@@ -25,6 +25,8 @@
  Created by Jelle Vandebeeck on 2009.07.25.
 */
 
+#import <Twitter/Twitter.h>
+
 #import "MCPickerViewController.h"
 #import "MCBlend.h"
 #import "MCAvailableBlendsViewController.h"
@@ -49,6 +51,10 @@ static BOOL accelerationIsShaking(UIAcceleration* last, UIAcceleration* current,
 	pickerView = [[MCPickerView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	pickerView.delegate = self;
 	[pickerView viewsHidden:YES];
+    
+    UITapGestureRecognizer *_tapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)] autorelease];
+    _tapGesture.numberOfTapsRequired = 2;
+    [pickerView addGestureRecognizer:_tapGesture];
 	
 	firstScreenLoad = YES;
 	[self loadPreferences];
@@ -65,6 +71,34 @@ static BOOL accelerationIsShaking(UIAcceleration* last, UIAcceleration* current,
 		[NSThread detachNewThreadSelector:@selector(postponedRefresh) toTarget:self withObject:nil];
 		firstScreenLoad = NO;
 	}
+}
+
+- (void)doubleTap:(UITapGestureRecognizer *)gesture {
+    TWTweetComposeViewController *_twitter = [[TWTweetComposeViewController alloc] init];
+    
+    [_twitter addURL:[NSURL URLWithString:@"http://fousa.github.com/7am"]];
+    [_twitter setInitialText:[NSString stringWithFormat:@"Drinking a Nespresso %@!", pickerView.blend.name]];
+    
+    // Show the controller
+    [self presentModalViewController:_twitter animated:YES];
+    
+    // Called when the tweet dialog has been closed
+    _twitter.completionHandler = ^(TWTweetComposeViewControllerResult result) {
+        NSString *title = @"Twitter";
+        NSString *message; 
+        
+        if (result == TWTweetComposeViewControllerResultCancelled)
+            message = @"You won't be tweeting this...";
+        else if (result == TWTweetComposeViewControllerResultDone)
+            message = @"Enjoy your coffee!";
+        
+        // Show alert to see how things went...
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alertView show];
+        
+        // Dismiss the controller
+        [self dismissModalViewControllerAnimated:YES];
+    };
 }
 
 - (void)dealloc {
